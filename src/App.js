@@ -10,9 +10,11 @@ class App  extends Component {
     super(props);
     this.state = {
       color: 'red',
-      fontSize: 15
+      fontSize: 16
     };
     this.onSetColor = this.onSetColor.bind(this);
+    this.onChangeSize = this.onChangeSize.bind(this);
+    this.onSettingDefault = this.onSettingDefault.bind(this);
   }
 
   onSetColor(params){
@@ -21,6 +23,23 @@ class App  extends Component {
     });
   }
 
+  onChangeSize(value){
+    if(this.state.fontSize+value>=8 && this.state.fontSize+value<=36){
+      this.setState({
+        fontSize: this.state.fontSize+value
+      });
+    }
+  }
+
+  onSettingDefault(value){
+    console.log(value);
+    if(value){
+      this.setState({
+        color: 'red',
+        fontSize:12 
+      });
+    }
+  }
   render()
   {
       return (
@@ -30,15 +49,15 @@ class App  extends Component {
               <ColorPicker color={this.state.color} onReceiveColor={ this.onSetColor } />
             </div>
             <div className="col-6">
-            <SizeSetting />
+            <SizeSetting fontSize={this.state.fontSize} onChangeSize={this.onChangeSize}/>
             </div>
           </div>
           <div className="row mb-1 justify-content-center">
-            <Reset />
+            <Reset onSettingDefault={this.onSettingDefault}/>
           </div>
           <div  className="row m-1">
           <div className="col-12">
-            <Result color={this.state.color} />
+            <Result color={this.state.color} fontSize={this.state.fontSize}/>
           </div>
         </div>
         </div>
